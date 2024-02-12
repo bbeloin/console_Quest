@@ -1,0 +1,29 @@
+Text-Based RPG (Role-Playing Game): Develop a text-based RPG where players can create characters,
+explore a fantasy world, engage in battles with monsters, complete quests, and level up their characters.
+Implement a storyline, character progression, and combat mechanics.
+
+PlayerModel abstract Class:
+    String name;
+    int health;
+    int strength;
+    int AC;
+    int speed;
+    int lvl;
+    int exp;
+    enum hairColor;
+    boolean isAlive;
+
+    private int attack(int amount);
+    private int roll(int roll);
+
+EnemyModel abstract Class:
+    String name; kobalt: Screblin(mop Boy)
+    int lvl;
+    int health;
+    int strength;
+    int AC;
+    int speed;
+    boolean isAlive;
+
+    private int abstract attack(int amount);
+    private int roll(int roll);
