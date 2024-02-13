@@ -21,7 +21,13 @@ public abstract class EnemyModel {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        if (hp <= 0){
+            setAlive(false);
+        } else if (hp > 100) {
+            this.hp = hp;
+        }else{
+            setAlive(true);
+        }
     }
 
     public int getConstitution() {

@@ -10,51 +10,84 @@ public class FinalQuestController {
     private static ArrayList<EnemyModel> enemys = new ArrayList<>();
 
     static FinalQuestUI ui = new FinalQuestUI();
+    static Player player = new Player();
+    static Enemy enemy = new Enemy();
     static Random random = new Random();
 
     public void run(){
 
         boolean usingProgram = true;
 
+        System.out.println(createCharacter());
 
         while (usingProgram) {
             int menuItem = ui.displayMainMenu();
 
             switch (menuItem) {
                 case 1:
-//                    displayAllZombies();
+
                     break;
                 case 2:
-//                    int randomZombie = random.nextInt(10) + 1;
-//
-//                    for (int i = 0; i < randomZombie; i++) {
-//                        zombieCalls();
-//                    }
-//
-//                    for (int i = 0; i < randomZombie; i++) {
-//                        displayAllZombies();
-//                    }
 
                     break;
                 case 3:
-//                    int num = ui.numberOfZombies();
-
-//                    for (int i = 0; i < num && num <= 2147483647; i++) {
-////                        if (num <= 2147483647){
-////
-////                        }
-////                        zombieCalls();
-//                    }
-//
-//                    for (int i = 0; i < num; i++) {
-////                        displayAllZombies();
-//                    }
-
-                    break;
-                case 4:
                     usingProgram = false;
                     break;
             }
+
+            do {
+                menuItem = ui.getActionChoice("\nWhat do you want to do? ", "Attack", "Run Away");
+
+                switch (menuItem){
+                    case 1:
+                        attack();
+                        break;
+                    case 2:
+                        runAway();
+                        break;
+                }
+
+            }while (!usingProgram);
+
+        }
+    }
+
+    public Player createCharacter(){
+        String name = ui.getCharacterName();
+        String sRace = ui.getRace();
+
+//        PlayerRaces race = PlayerRaces.valueOf(sRace);
+        PlayerRaces race = getEnumIgnoreCase(sRace);
+
+        int hp = random.nextInt(10) + 1;
+        int con = random.nextInt(10) + 1;
+        int str = random.nextInt(10) + 1;
+        int dex = random.nextInt(10) + 1;
+        int ac = random.nextInt(10) + 1;
+
+        Player player = new Player(name, race, hp, con, str, dex, ac);
+
+        return player;
+
+    }
+
+    public static PlayerRaces getEnumIgnoreCase(String value) {
+        for (PlayerRaces race : PlayerRaces.values()) {
+            if (race.name().equalsIgnoreCase(value)) {
+                return race;
+            }
+        }
+        return null;
+    }
+
+    public void attack(){
+
+    }
+
+    public void runAway(){
+
+        if (player.getDexterity() > random.nextInt(player.getDexterity() + 5 - enemy.getLvl()) + 1){
+            enemy.setHp(0);
         }
     }
 
