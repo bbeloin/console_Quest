@@ -1,9 +1,8 @@
 package models;
 
-public class Acolyte extends EnemyModel{
-
-    public Acolyte() {
-        setMonsterRaces(MonsterRaces.ACOLYTE);
+public class Enemy extends EnemyModel{
+    public Enemy() {
+        setMonsterRaces(MonsterRaces.MIMIC);
         setLvl(1);
         setHp(10);
         setConstitution(9);

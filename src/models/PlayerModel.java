@@ -53,7 +53,14 @@ public abstract class PlayerModel {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        if (hp <= 0){
+            setAlive(false);
+        } else if (hp > 100) {
+            this.hp = hp;
+        }else{
+            this.hp = hp;
+            setAlive(true);
+        }
     }
 
     public int getConstitution() {

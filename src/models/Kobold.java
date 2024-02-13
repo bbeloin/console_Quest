@@ -3,7 +3,7 @@ package models;
 public class Kobold extends EnemyModel{
 
     public Kobold() {
-        setMonsterRaces(MonsterRaces.KOBALT);
+        setMonsterRaces(MonsterRaces.KOBOLD);
         setLvl(1);
         setHp(10);
         setConstitution(9);
