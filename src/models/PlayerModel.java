@@ -3,40 +3,33 @@ package models;
 import java.util.Random;
 
 public abstract class PlayerModel {
-    Random random = new Random();
-    String name;
-    PlayerRaces playerRace;
-    int hp;
-    int Constitution;
-    int strength;
-    int Dexterity;
-    int AC;
-    int lvl;
-    int exp;
-    boolean isAlive;
+    private Random random = new Random();
+    private String name;
+    private PlayerRaces playerRace;
+    private int hp, Constitution, strength, Dexterity, AC, lvl, exp;
+    private boolean isAlive;
 
-    public PlayerModel(){
+    public PlayerModel() {
         setName("Benjamen");
         setPlayerRace(PlayerRaces.HUMAN);
+        setLvl(1);
         setHp(10);
         setConstitution(10);
         setStrength(8);
         setDexterity(12);
-        setAC(10);
-        setLvl(1);
+        setAC(12);
         setAlive(true);
     }
 
-    public PlayerModel(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int AC,boolean isAlive) {
+    public PlayerModel(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int AC) {
         setName(name);
         setPlayerRace(playerRace);
+        setLvl(1);
         setHp(hp);
         setConstitution(constitution);
         setStrength(strength);
         setDexterity(dexterity);
         setAC(AC);
-        setLvl(1);
-        setAlive(isAlive);
     }
 
     public String getName() {
@@ -45,6 +38,10 @@ public abstract class PlayerModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public PlayerRaces getPlayerRace() {
+        return playerRace;
     }
 
     public void setPlayerRace(PlayerRaces playerRace) {
@@ -129,6 +126,16 @@ public abstract class PlayerModel {
     public abstract String attackType(int roll);
 
     @Override
-    public abstract String toString();
+    public String toString() {
+        return new StringBuilder(this.getClass().getSimpleName()).append("{")
+                .append("Name: ").append(getName())
+                .append(", Race: ").append(getPlayerRace())
+                .append(", Lvl: ").append(getLvl())
+                .append(", HP: ").append(getHp())
+                .append(", Con: ").append(getConstitution())
+                .append(", Strength: ").append(getStrength())
+                .append(", Dex: ").append(getDexterity())
+                .append(", AC: ").append(getAC()).toString();
+    }
 
 }
