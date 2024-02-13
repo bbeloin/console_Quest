@@ -1,3 +1,4 @@
+import controller.FinalQuestController;
 import models.*;
 
 public class Main {
@@ -10,5 +11,7 @@ public class Main {
         System.out.println(new Kobold());
         System.out.println(new Mimic());
         System.out.println(new Acolyte());
+
+        new FinalQuestController().run();
     }
 }
