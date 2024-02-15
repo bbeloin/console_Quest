@@ -18,17 +18,19 @@ public class FinalQuestController {
 
         boolean usingProgram = true;
 
-        System.out.println(createCharacter());
+        createCharacter();
 
         while (usingProgram) {
+            System.out.println(Quest.getQuest());
+
             int menuItem = ui.displayMainMenu();
 
             switch (menuItem) {
                 case 1:
-
+                    acceptQuest();
                     break;
                 case 2:
-
+                    denyQuest();
                     break;
                 case 3:
                     usingProgram = false;
@@ -52,7 +54,7 @@ public class FinalQuestController {
         }
     }
 
-    public Player createCharacter(){
+    private Player createCharacter(){
         String name = ui.getCharacterName();
         String sRace = ui.getRace();
 
@@ -71,7 +73,7 @@ public class FinalQuestController {
 
     }
 
-    public static PlayerRaces getEnumIgnoreCase(String value) {
+    private static PlayerRaces getEnumIgnoreCase(String value) {
         for (PlayerRaces race : PlayerRaces.values()) {
             if (race.name().equalsIgnoreCase(value)) {
                 return race;
@@ -80,11 +82,15 @@ public class FinalQuestController {
         return null;
     }
 
-    public void attack(){
+    private void acceptQuest(){}
+
+    private void denyQuest(){}
+
+    private void attack(){
 
     }
 
-    public void runAway(){
+    private void runAway(){
 
         if (player.getDexterity() > random.nextInt(player.getDexterity() + 5 - enemy.getLvl()) + 1){
             enemy.setHp(0);

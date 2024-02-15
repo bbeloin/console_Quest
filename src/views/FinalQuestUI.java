@@ -3,7 +3,6 @@ package views;
 import java.util.Random;
 
 public class FinalQuestUI {
-    static Random random = new Random();
 
     public int displayMainMenu() {
         int selectedOption;
@@ -19,8 +18,8 @@ public class FinalQuestUI {
 
             selectedOption = Console.getIntInput("Your selection: ", Console.TextColor.CYAN);
 
-            if (selectedOption < 1 || selectedOption > 4) {
-                Console.writeLn("Invalid option, choose 1-4 only!", Console.TextColor.RED);
+            if (selectedOption < 1 || selectedOption > 3) {
+                Console.writeLn("Invalid option, choose 1-3 only!", Console.TextColor.RED);
                 selectedOption = -1; // invalid input, repeat
             }
 

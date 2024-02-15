@@ -6,7 +6,8 @@ public abstract class PlayerModel {
     private Random random = new Random();
     private String name;
     private PlayerRaces playerRace;
-    private int hp, Constitution, strength, Dexterity, AC, lvl, exp;
+    private int hp, Constitution, strength, Dexterity, AC, lvl, xp;
+    private int neededXP = 10;
     private boolean isAlive;
 
     public PlayerModel() {
@@ -95,20 +96,33 @@ public abstract class PlayerModel {
         this.AC = AC;
     }
 
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
+    public int getNeededXP() {
+        return neededXP;
+    }
+
+    public void setNeededXP(int neededXP) {
+        this.neededXP = neededXP;
+    }
+
+
     public int getLvl() {
         return lvl;
     }
 
     public void setLvl(int lvl) {
-        this.lvl = lvl;
-    }
-
-    public int getExp() {
-        return exp;
-    }
-
-    public void setExp(int exp) {
-        this.exp = exp;
+        if (xp >= neededXP){
+            this.lvl = lvl + 1;
+        }else {
+            this.lvl = lvl;
+        }
     }
 
     public boolean isAlive() {
