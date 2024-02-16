@@ -4,15 +4,21 @@ public class Acolyte extends EnemyModel{
 
     Player player;
 
+    /*
+    For stats and information go to:
+        https://www.dndbeyond.com/monsters/16763-acolyte
+     */
+
     public Acolyte() {
         setMonsterRaces(MonsterRaces.ACOLYTE);
         setLvl(1);
-        setHp(10);
-        setConstitution(9);
-        setStrength(7);
-        setDexterity(15);
-        setEnemyAC(12);
+        setHp(roll(2, 8));
+        setConstitution(10);
+        setStrength(10);
+        setDexterity(10);
+        setEnemyAC(10);
     }
+
     public int enemyDied(){
         int xpDropped = 7 + player.getLvl();
 
@@ -28,10 +34,10 @@ public class Acolyte extends EnemyModel{
     public int attack(int armourClassCheckRoll){
         int totalDamage = 0;
 
-        if (armourClassCheckRoll >= player.getPlayerAC()){
-            totalDamage = roll(3, 6) + calculateStrModifier();
+        if ((armourClassCheckRoll + 2 + calculateStrModifier()) >= player.getPlayerAC()){
+            totalDamage = roll(1, 4);
             if (armourClassCheckRoll == 20){
-                totalDamage = (roll(3, 6) + calculateStrModifier()) * 2;
+                totalDamage = (roll(1, 4)) * 2;
             }
         }
 

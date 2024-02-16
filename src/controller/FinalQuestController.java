@@ -28,7 +28,7 @@ public class FinalQuestController {
         }
 
         while (usingProgram) {
-            
+
             //TODO: Might delete if statement later if not necessary.
 //            if (!enemy.isAlive()) {
 //                System.out.println(Quest.getQuest());
@@ -56,11 +56,11 @@ public class FinalQuestController {
         String sRace = ui.getRace();
         PlayerRaces races = getEnumIgnoreCase(sRace);
 
-        int hp = (random.nextInt(10) + 1) + player.calculateConModifier();
-        int con = random.nextInt(10) + 1;
-        int str = random.nextInt(10) + 1;
-        int dex = random.nextInt(10) + 1;
-        int ac = random.nextInt(10) + 1;
+        int hp = (random.nextInt(10) + 8) + player.calculateConModifier();
+        int con = random.nextInt(10) + 8;
+        int str = random.nextInt(10) + 8;
+        int dex = random.nextInt(10) + 8;
+        int ac = random.nextInt(10) + 8;
 
         Player player = new Player(name, races, hp, con, str, dex, ac);
 

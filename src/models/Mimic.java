@@ -3,13 +3,18 @@ package models;
 public class Mimic extends EnemyModel{
     static Player player;
 
+    /*
+    For stats and information go to:
+        https://www.dndbeyond.com/monsters/16957-mimic
+     */
+
     public Mimic() {
         setMonsterRaces(MonsterRaces.MIMIC);
         setLvl(1);
-        setHp(10);
-        setConstitution(9);
-        setStrength(7);
-        setDexterity(15);
+        setHp((roll(9, 8) + 18));
+        setConstitution(15 + 2);
+        setStrength(17 + 3);
+        setDexterity(12 + 1);
         setEnemyAC(12);
     }
 
@@ -29,12 +34,13 @@ public class Mimic extends EnemyModel{
     public static int attack(int armourClassCheckRoll){
         int totalDamage = 0;
 
-        if (armourClassCheckRoll >= player.getPlayerAC()){
-            // totalDamage = 3 through 20 damage
-            totalDamage = roll(3, 6) + calculateStrModifier();
+        if ((armourClassCheckRoll + calculateStrModifier()) >= player.getPlayerAC()){
+            // totalDamage = 1 through 8 damage
+
+            totalDamage = roll(1, 8);
 
             if (armourClassCheckRoll == 20){
-                totalDamage = (roll(3, 6) + calculateStrModifier()) * 2;
+                totalDamage = (roll(1, 8)) * 2;
             }
         }
 
