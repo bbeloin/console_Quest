@@ -6,7 +6,7 @@ public abstract class PlayerModel {
     private Random random = new Random();
     private String name;
     private PlayerRaces playerRace;
-    private int hp, Constitution, strength, Dexterity, AC, lvl, xp;
+    private int hp, Constitution, strength, speed, Dexterity, playerAC, lvl, xp;
     private int neededXP = 10;
     private boolean isAlive;
 
@@ -18,11 +18,11 @@ public abstract class PlayerModel {
         setConstitution(10);
         setStrength(8);
         setDexterity(12);
-        setAC(12);
+        setPlayerAC(12);
         setAlive(true);
     }
 
-    public PlayerModel(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int AC) {
+    public PlayerModel(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int playerAC) {
         setName(name);
         setPlayerRace(playerRace);
         setLvl(1);
@@ -30,7 +30,7 @@ public abstract class PlayerModel {
         setConstitution(constitution);
         setStrength(strength);
         setDexterity(dexterity);
-        setAC(AC);
+        setPlayerAC(playerAC);
     }
 
     public String getName() {
@@ -80,6 +80,14 @@ public abstract class PlayerModel {
         this.strength = strength;
     }
 
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed + calculateDexModifier();
+    }
+
     public int getDexterity() {
         return Dexterity;
     }
@@ -88,12 +96,12 @@ public abstract class PlayerModel {
         Dexterity = dexterity;
     }
 
-    public int getAC() {
-        return AC;
+    public int getPlayerAC() {
+        return playerAC;
     }
 
-    public void setAC(int AC) {
-        this.AC = AC;
+    public void setPlayerAC(int playerAC) {
+        this.playerAC = playerAC;
     }
 
     public int getXp() {
@@ -118,7 +126,9 @@ public abstract class PlayerModel {
     }
 
     public void setLvl(int lvl) {
-        if (xp >= neededXP){
+        if (getXp() >= getNeededXP()){
+            setNeededXP(getNeededXP() + 5);
+            setXp(getXp() - getNeededXP());
             this.lvl = lvl + 1;
         }else {
             this.lvl = lvl;
@@ -131,6 +141,18 @@ public abstract class PlayerModel {
 
     public void setAlive(boolean alive) {
         isAlive = alive;
+    }
+
+    public int calculateConModifier(){
+        return (getConstitution() - 10) / 2;
+    }
+
+    public int calculateStrModifier(){
+        return (getStrength() - 10) / 2;
+    }
+
+    public int calculateDexModifier(){
+        return (getDexterity() - 10) / 2;
     }
 
     public int roll(int numDice, int diceSides) {
@@ -156,7 +178,7 @@ public abstract class PlayerModel {
                 .append(", Con: ").append(getConstitution())
                 .append(", Strength: ").append(getStrength())
                 .append(", Dex: ").append(getDexterity())
-                .append(", AC: ").append(getAC()).toString();
+                .append(", AC: ").append(getPlayerAC()).toString();
     }
 
 }

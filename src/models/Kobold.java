@@ -1,6 +1,7 @@
 package models;
 
 public class Kobold extends EnemyModel{
+    Player player;
 
     public Kobold() {
         setMonsterRaces(MonsterRaces.KOBOLD);
@@ -9,17 +10,28 @@ public class Kobold extends EnemyModel{
         setConstitution(9);
         setStrength(7);
         setDexterity(15);
-        setAC(12);
+        setEnemyAC(12);
         setAlive(true);
     }
-    @Override
-    public int attack(int attackRoll){
+    public int enemyDied(){
+        int xpDropped = 5 + player.getLvl();
+
+        if (isAlive()){
+            attack(roll(1, 20));
+        }else {
+            return xpDropped;
+        }
+
+        return -1;
+    }
+
+    public int attack(int armourClassCheckRoll){
         int totalDamage = 0;
 
-        if (attackRoll >= getAC()){
-            totalDamage = roll(3, 6);
-            if (attackRoll == 20){
-                totalDamage *= 2;
+        if (armourClassCheckRoll >= player.getPlayerAC()){
+            totalDamage = roll(3, 6) + calculateStrModifier();
+            if (armourClassCheckRoll == 20){
+                totalDamage = (roll(3, 6) + calculateStrModifier()) * 2;
             }
         }
 
@@ -32,7 +44,7 @@ public class Kobold extends EnemyModel{
 
         if (roll == 20){
             return "Critical Hit";
-        } else if (roll >= getAC()) {
+        } else if (roll >= getEnemyAC()) {
             return "hit";
         }else {
             return chance;

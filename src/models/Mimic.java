@@ -1,6 +1,7 @@
 package models;
 
 public class Mimic extends EnemyModel{
+    static Player player;
 
     public Mimic() {
         setMonsterRaces(MonsterRaces.MIMIC);
@@ -9,17 +10,31 @@ public class Mimic extends EnemyModel{
         setConstitution(9);
         setStrength(7);
         setDexterity(15);
-        setAC(12);
+        setEnemyAC(12);
     }
 
-    @Override
-    public int attack(int attackRoll){
+    public static int enemyDied(){
+        int xpDropped = 10 + player.getLvl();
+
+        if (isAlive()){
+            attack(roll(1, 20));
+        }else {
+            setAlive(false);
+            return xpDropped;
+        }
+
+        return -1;
+    }
+
+    public static int attack(int armourClassCheckRoll){
         int totalDamage = 0;
 
-        if (attackRoll >= getAC()){
-            totalDamage = roll(3, 6);
-            if (attackRoll == 20){
-                totalDamage *= 2;
+        if (armourClassCheckRoll >= player.getPlayerAC()){
+            // totalDamage = 3 through 20 damage
+            totalDamage = roll(3, 6) + calculateStrModifier();
+
+            if (armourClassCheckRoll == 20){
+                totalDamage = (roll(3, 6) + calculateStrModifier()) * 2;
             }
         }
 
@@ -32,7 +47,7 @@ public class Mimic extends EnemyModel{
 
         if (roll == 20){
             return "Critical Hit";
-        } else if (roll >= getAC()) {
+        } else if (roll >= getEnemyAC()) {
             return "hit";
         }else {
             return chance;

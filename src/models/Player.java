@@ -1,20 +1,25 @@
 package models;
 
 public class Player extends PlayerModel{
+    public static int instanceCount = 0;
 
     public Player(){
         super();
-    }
+        instanceCount++;    }
 
     public Player(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int AC) {
         super(name, playerRace, hp, constitution, strength, dexterity, AC);
+        instanceCount++;    }
+
+    public static int getInstanceCount() {
+        return instanceCount;
     }
 
     @Override
     public int attack(int attackRoll){
         int totalDamage = 0;
 
-        if (attackRoll >= getAC()){
+        if (attackRoll >= getPlayerAC()){
             totalDamage = roll(3, 6);
             if (attackRoll == 20){
                 totalDamage *= 2;
@@ -30,7 +35,7 @@ public class Player extends PlayerModel{
 
         if (roll == 20){
             return "Critical Hit";
-        } else if (roll >= getAC()) {
+        } else if (roll >= getPlayerAC()) {
             return "hit";
         }else {
             return chance;

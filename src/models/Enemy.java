@@ -1,6 +1,7 @@
 package models;
 
 public class Enemy extends EnemyModel{
+
     public Enemy() {
         setMonsterRaces(MonsterRaces.MIMIC);
         setLvl(1);
@@ -8,14 +9,13 @@ public class Enemy extends EnemyModel{
         setConstitution(9);
         setStrength(7);
         setDexterity(15);
-        setAC(12);
+        setEnemyAC(12);
     }
 
-    @Override
     public int attack(int attackRoll){
         int totalDamage = 0;
 
-        if (attackRoll >= getAC()){
+        if (attackRoll >= getEnemyAC()){
             totalDamage = roll(3, 6);
             if (attackRoll == 20){
                 totalDamage *= 2;
@@ -31,7 +31,7 @@ public class Enemy extends EnemyModel{
 
         if (roll == 20){
             return "Critical Hit";
-        } else if (roll >= getAC()) {
+        } else if (roll >= getEnemyAC()) {
             return "hit";
         }else {
             return chance;

@@ -8,12 +8,10 @@ public class FinalQuestUI {
         int selectedOption;
 
         do {
-            Console.writeLn("Select a menu option: ", Console.TextColor.BLUE);
 
             Console.writeLn("""
-                    1. Accept Quest
-                    2. Decline Quest
-                    3. Exit
+                    1. Accept the Quest
+                    2. Decline the Quest
                     """);
 
             selectedOption = Console.getIntInput("Your selection: ", Console.TextColor.CYAN);
@@ -41,7 +39,7 @@ public class FinalQuestUI {
             if (choice == 1 || choice == 2){
                 keepGoing = false;
             }else {
-                System.out.println("invailid choice");
+                System.out.println("invalid choice");
             }
         }while (keepGoing);
 

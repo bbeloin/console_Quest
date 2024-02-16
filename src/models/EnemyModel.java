@@ -3,12 +3,12 @@ package models;
 import java.util.Random;
 
 public abstract class EnemyModel {
-    private Random random = new Random();
-    private MonsterRaces monsterRaces;
-    private int hp, Constitution, strength, Dexterity, AC, lvl;
-    private boolean isAlive;
+    private static Random random = new Random();
+    private static MonsterRaces monsterRaces;
+    private static int hp, Constitution, strength, speed, Dexterity, enemyAC, lvl;
+    private static boolean isAlive;
 
-    public MonsterRaces getMonsterRaces() {
+    public static MonsterRaces getMonsterRaces() {
         return monsterRaces;
     }
 
@@ -16,7 +16,7 @@ public abstract class EnemyModel {
         this.monsterRaces = monsterRaces;
     }
 
-    public int getHp() {
+    public static int getHp() {
         return hp;
     }
 
@@ -30,7 +30,7 @@ public abstract class EnemyModel {
         }
     }
 
-    public int getConstitution() {
+    public static int getConstitution() {
         return Constitution;
     }
 
@@ -38,7 +38,7 @@ public abstract class EnemyModel {
         this.Constitution = constitution;
     }
 
-    public int getStrength() {
+    public static int getStrength() {
         return strength;
     }
 
@@ -46,7 +46,15 @@ public abstract class EnemyModel {
         this.strength = strength;
     }
 
-    public int getDexterity() {
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        EnemyModel.speed = speed + calculateDexModifier();
+    }
+
+    public static int getDexterity() {
         return Dexterity;
     }
 
@@ -54,15 +62,15 @@ public abstract class EnemyModel {
         Dexterity = dexterity;
     }
 
-    public int getAC() {
-        return AC;
+    public static int getEnemyAC() {
+        return enemyAC;
     }
 
-    public void setAC(int AC) {
-        this.AC = AC;
+    public void setEnemyAC(int enemyAC) {
+        this.enemyAC = enemyAC;
     }
 
-    public int getLvl() {
+    public static int getLvl() {
         return lvl;
     }
 
@@ -70,15 +78,27 @@ public abstract class EnemyModel {
         this.lvl = lvl;
     }
 
-    public boolean isAlive() {
+    public static boolean isAlive() {
         return isAlive;
     }
 
-    public void setAlive(boolean alive) {
+    public static void setAlive(boolean alive) {
         isAlive = alive;
     }
 
-    public int roll(int numDice, int diceSides) {
+    public static int calculateConModifier(){
+        return (getConstitution() - 10) / 2;
+    }
+
+    public static int calculateStrModifier(){
+        return (getStrength() - 10) / 2;
+    }
+
+    public static int calculateDexModifier(){
+        return (getDexterity() - 10) / 2;
+    }
+
+    public static int roll(int numDice, int diceSides) {
         int totalRoll = 0;
 
         for (int i = 0; i < numDice; i++) {
@@ -86,8 +106,6 @@ public abstract class EnemyModel {
         }
         return totalRoll;
     }
-
-    public abstract int attack(int attackRoll);
 
     public abstract String attackType(int roll);
 
@@ -100,7 +118,7 @@ public abstract class EnemyModel {
                 .append(", Con: ").append(getConstitution())
                 .append(", Strength: ").append(getStrength())
                 .append(", Dex: ").append(getDexterity())
-                .append(", AC: ").append(getAC()).toString();
+                .append(", AC: ").append(getEnemyAC()).toString();
     }
 }
 

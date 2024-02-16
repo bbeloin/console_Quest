@@ -10,19 +10,24 @@ public class Quest {
         int questSelector = random.nextInt(6) + 1;
 
         StringBuilder q1 = new StringBuilder();
-        q1.append("Old lady Greta needs help, a groups of kobolds are raiding her cellar.");
+        q1.append("Old lady Greta needs help, a groups of kobolds are raiding her cellar. \n");
+        q1.append("Do you: ");
 
         StringBuilder q2 = new StringBuilder();
-        q2.append("A hord of kobolds just stole from Mr.Perkins.");
+        q2.append("A hord of kobolds just stole from Mr.Perkins. \n");
+        q2.append("Do you: ");
 
         StringBuilder q3 = new StringBuilder();
-        q3.append("Your have reason to believe that there's and acolyte of baahl terrorizing WaterDeep.");
+        q3.append("Your have reason to believe that there's and acolyte of baahl terrorizing WaterDeep. \n");
+        q3.append("Do you: ");
 
         StringBuilder q4 = new StringBuilder();
-        q4.append("An Acolyte of Myrkul has been disturbing the local crematory. ");
+        q4.append("An Acolyte of Myrkul has been disturbing the local crematory. \n");
+        q4.append("Do you: ");
 
         StringBuilder q5 = new StringBuilder();
-        q5.append("You hear legends of a mysterious house of wonderful tresours.");
+        q5.append("You hear legends of a mysterious house of wonderful tresours. \n");
+        q5.append("Do you: ");
 
         switch (questSelector){
             case 1:
@@ -34,7 +39,7 @@ public class Quest {
             case 4:
                 return q4;
             case 5:
-                return q3;
+                return q5;
         }
 
         return null;

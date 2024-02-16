@@ -6,25 +6,35 @@ import views.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+import static models.Quest.getQuest;
+
 public class FinalQuestController {
     private static ArrayList<EnemyModel> enemys = new ArrayList<>();
+    private static FinalQuestUI ui = new FinalQuestUI();
+    private static Random random = new Random();
+    private static Enemy enemy = new Enemy();
 
-    static FinalQuestUI ui = new FinalQuestUI();
-    static Random random = new Random();
+    private static Player player = new Player();
 
     public void run(){
 
         boolean usingProgram = true;
-        Enemy enemy = new Enemy();
+        StringBuilder a = getQuest();
 
-        createCharacter();
+        if (Player.getInstanceCount() == 1){
+            createCharacter();
+            System.out.println(a);
+            Player.instanceCount++;
+        }
 
         while (usingProgram) {
-            int menuItem = ui.displayMainMenu();
+            
+            //TODO: Might delete if statement later if not necessary.
+//            if (!enemy.isAlive()) {
+//                System.out.println(Quest.getQuest());
+//            }
 
-            if (!enemy.isAlive()){
-                System.out.println(Quest.getQuest());
-            }
+            int menuItem = ui.displayMainMenu();
 
             switch (menuItem) {
                 case 1:
@@ -32,25 +42,6 @@ public class FinalQuestController {
                     break;
                 case 2:
                     denyQuest();
-                    break;
-                case 3:
-                    usingProgram = false;
-                    break;
-
-            }
-
-            String question = "What do you do? ";
-            String q1Attack = " 1. Attack: ";
-            String q2RunAway = " 2. Run Away ";
-
-            int choice = ui.getActionChoice(question, q1Attack, q2RunAway);
-
-            switch (choice){
-                case 1:
-                    attack();
-                    break;
-                case 2:
-                    runAway();
                     break;
             }
 
@@ -65,7 +56,7 @@ public class FinalQuestController {
         String sRace = ui.getRace();
         PlayerRaces races = getEnumIgnoreCase(sRace);
 
-        int hp = random.nextInt(10) + 1;
+        int hp = (random.nextInt(10) + 1) + player.calculateConModifier();
         int con = random.nextInt(10) + 1;
         int str = random.nextInt(10) + 1;
         int dex = random.nextInt(10) + 1;
@@ -85,13 +76,39 @@ public class FinalQuestController {
         return null;
     }
 
-    private void denyQuest() {}
+    private void acceptQuest() {
 
-    private void acceptQuest() {}
+        String question = "What do you do? ";
+        String q1Attack = " Attack: ";
+        String q2RunAway = " Run Away ";
+
+        int choice = ui.getActionChoice(question, q1Attack, q2RunAway);
+
+        switch (choice){
+            case 1:
+                attack();
+                break;
+            case 2:
+                if (player.getSpeed() > enemy.getSpeed()){
+                    runAway();
+                }
+                break;
+        }
+    }
+
+    private void denyQuest() {
+        System.out.println(getQuest());
+        run();
+    }
 
     private void attack(){}
 
-    private void runAway(){}
+    private void runAway(){
+        for (EnemyModel i : enemys){
+            i.setAlive(false);
+            System.out.printf("You ran away from %s", i.getMonsterRaces());
+        }
+    }
 
 
 }
