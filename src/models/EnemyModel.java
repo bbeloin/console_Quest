@@ -98,15 +98,6 @@ public abstract class EnemyModel {
         return (getDexterity() - 10) / 2;
     }
 
-    public static int roll(int numDice, int diceSides) {
-        int totalRoll = 0;
-
-        for (int i = 0; i < numDice; i++) {
-            totalRoll += random.nextInt(diceSides) + 1;
-        }
-        return totalRoll;
-    }
-
     public abstract String attackType(int roll);
 
     @Override

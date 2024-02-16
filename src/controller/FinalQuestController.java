@@ -9,10 +9,9 @@ import java.util.Random;
 import static models.Quest.getQuest;
 
 public class FinalQuestController {
-    private static ArrayList<EnemyModel> enemys = new ArrayList<>();
+    private static ArrayList<EnemyModel> enemy = new ArrayList<>();
     private static FinalQuestUI ui = new FinalQuestUI();
     private static Random random = new Random();
-    private static Enemy enemy = new Enemy();
 
     private static Player player = new Player();
 
@@ -89,9 +88,15 @@ public class FinalQuestController {
                 attack();
                 break;
             case 2:
-                if (player.getSpeed() > enemy.getSpeed()){
-                    runAway();
+
+                for (EnemyModel i : enemy){
+                    if (player.getSpeed() > i.getSpeed()){
+                        i.setAlive(false);
+                        System.out.printf("You ran away from %s", i.getMonsterRaces());
+                    }
+
                 }
+
                 break;
         }
     }
@@ -102,13 +107,5 @@ public class FinalQuestController {
     }
 
     private void attack(){}
-
-    private void runAway(){
-        for (EnemyModel i : enemys){
-            i.setAlive(false);
-            System.out.printf("You ran away from %s", i.getMonsterRaces());
-        }
-    }
-
 
 }
