@@ -12,7 +12,7 @@ public class Acolyte extends EnemyModel{
     public Acolyte() {
         setMonsterRaces(MonsterRaces.ACOLYTE);
         setLvl(1);
-        setHp(Die.roll(2, 8));
+        setHp(Die.d8(2));
         setConstitution(10);
         setStrength(10);
         setDexterity(10);
@@ -23,7 +23,7 @@ public class Acolyte extends EnemyModel{
         int xpDropped = 7 + player.getLvl();
 
         if (isAlive()){
-            attack(Die.roll(1, 20));
+            attack(Die.d20(1));
         }else {
             return xpDropped;
         }
@@ -35,9 +35,9 @@ public class Acolyte extends EnemyModel{
         int totalDamage = 0;
 
         if ((armourClassCheckRoll + 2 + calculateStrModifier()) >= player.getPlayerAC()){
-            totalDamage = Die.roll(1, 4);
+            totalDamage = Die.d4(1);
             if (armourClassCheckRoll == 20){
-                totalDamage = (Die.roll(1, 4)) * 2;
+                totalDamage = (Die.d4(1)) * 2;
             }
         }
 

@@ -11,7 +11,7 @@ public class Mimic extends EnemyModel{
     public Mimic() {
         setMonsterRaces(MonsterRaces.MIMIC);
         setLvl(1);
-        setHp((Die.roll(9, 8) + 18));
+        setHp((Die.d8(9) + 18));
         setConstitution(15 + 2);
         setStrength(17 + 3);
         setDexterity(12 + 1);
@@ -22,7 +22,7 @@ public class Mimic extends EnemyModel{
         int xpDropped = 10 + player.getLvl();
 
         if (isAlive()){
-            attack(Die.roll(1, 20));
+            attack(Die.d20(1));
         }else {
             setAlive(false);
             return xpDropped;
@@ -37,10 +37,10 @@ public class Mimic extends EnemyModel{
         if ((armourClassCheckRoll + calculateStrModifier()) >= player.getPlayerAC()){
             // totalDamage = 1 through 8 damage
 
-            totalDamage = Die.roll(1, 8);
+            totalDamage = Die.d8(1);
 
             if (armourClassCheckRoll == 20){
-                totalDamage = (Die.roll(1, 8)) * 2;
+                totalDamage = (Die.d8(1)) * 2;
             }
         }
 

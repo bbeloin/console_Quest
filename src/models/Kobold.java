@@ -12,7 +12,7 @@ public class Kobold extends EnemyModel{
         setMonsterRaces(MonsterRaces.KOBOLD);
         setLvl(1);
 
-        int hpRoll = (Die.roll(2, 6)) - 2;
+        int hpRoll = (Die.d6(2)) - 2;
 
         if (hpRoll == 0){
             setHp(5);
@@ -30,7 +30,7 @@ public class Kobold extends EnemyModel{
         int xpDropped = 5 + player.getLvl();
 
         if (isAlive()){
-            attack(Die.roll(1, 20));
+            attack(Die.d20(1));
         }else {
             return xpDropped;
         }
@@ -42,9 +42,9 @@ public class Kobold extends EnemyModel{
         int totalDamage = 0;
 
         if ((armourClassCheckRoll + calculateStrModifier()) >= player.getPlayerAC()){
-            totalDamage = Die.roll(3, 6);
+            totalDamage = Die.d6(3);
             if (armourClassCheckRoll == 20){
-                totalDamage = (Die.roll(3, 6)) * 2;
+                totalDamage = (Die.d6(3)) * 2;
             }
         }
 

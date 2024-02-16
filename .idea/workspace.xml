@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3b63e3bd-1ea8-4756-ac18-6bad06b44d1e" name="Changes" comment="Quest update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/FinalQuestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/FinalQuestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Acolyte.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Acolyte.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/EnemyModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/EnemyModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Die.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Die.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Kobold.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Kobold.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/Mimic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Mimic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/PlayerModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/PlayerModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Quest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Quest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/FinalQuestUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/FinalQuestUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +43,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Main.executor": "Debug",
+    "Application.Main.executor": "Run",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
@@ -130,21 +123,5 @@
     <MESSAGE value="character update" />
     <MESSAGE value="Quest update" />
     <option name="LAST_COMMIT_MESSAGE" value="Quest update" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/controller/FinalQuestController.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="6" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/controller/FinalQuestController.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
