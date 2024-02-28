@@ -18,20 +18,15 @@ public class Mimic extends EnemyModel{
         setEnemyAC(12);
     }
 
-    public static int enemyDied(){
+    @Override
+    public int enemyDied(){
         int xpDropped = 10 + player.getLvl();
 
-        if (isAlive()){
-            attack(Die.d20(1));
-        }else {
-            setAlive(false);
-            return xpDropped;
-        }
-
-        return -1;
+        return xpDropped;
     }
 
-    public static int attack(int armourClassCheckRoll){
+    @Override
+    public int attack(int armourClassCheckRoll){
         int totalDamage = 0;
 
         if ((armourClassCheckRoll + calculateStrModifier()) >= player.getPlayerAC()){
@@ -47,18 +42,6 @@ public class Mimic extends EnemyModel{
         return totalDamage;
     }
 
-    @Override
-    public String attackType(int roll){
-        String chance = "miss";
-
-        if (roll == 20){
-            return "Critical Hit";
-        } else if (roll >= getEnemyAC()) {
-            return "hit";
-        }else {
-            return chance;
-        }
-    }
 
     @Override
     public String toString() {

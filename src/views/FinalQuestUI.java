@@ -1,6 +1,7 @@
 package views;
 
-import java.util.Random;
+import models.EnemyModel;
+import models.Player;
 
 public class FinalQuestUI {
 
@@ -44,6 +45,11 @@ public class FinalQuestUI {
         }while (keepGoing);
 
         return choice;
+    }
+
+    public void displayFighters(Player player, EnemyModel enemy){
+        Console.writeLn(player.toString());
+        Console.writeLn(enemy.toString());
     }
 
     public String getCharacterName(){

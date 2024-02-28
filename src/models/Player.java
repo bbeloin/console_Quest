@@ -5,11 +5,13 @@ public class Player extends PlayerModel{
 
     public Player(){
         super();
-        instanceCount++;    }
+        instanceCount++;
+    }
 
     public Player(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int AC) {
         super(name, playerRace, hp, constitution, strength, dexterity, AC);
-        instanceCount++;    }
+        instanceCount++;
+    }
 
     public static int getInstanceCount() {
         return instanceCount;
@@ -19,8 +21,8 @@ public class Player extends PlayerModel{
     public int attack(int attackRoll){
         int totalDamage = 0;
 
-        if (attackRoll >= getPlayerAC()){
-            totalDamage = roll(3, 6);
+        if (attackRoll >= EnemyModel.getEnemyAC()){
+            totalDamage = Die.d6(3);
             if (attackRoll == 20){
                 totalDamage *= 2;
             }

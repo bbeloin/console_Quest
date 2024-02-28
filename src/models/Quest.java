@@ -3,11 +3,11 @@ package models;
 import java.util.Random;
 
 public class Quest {
+    static Random random = new Random();
+
+    public static int questSelector = random.nextInt(5) + 1;
 
     public static StringBuilder getQuest(){
-        Random random = new Random();
-
-        int questSelector = random.nextInt(6) + 1;
 
         StringBuilder q1 = new StringBuilder();
         q1.append("Old lady Greta needs help, a groups of kobolds are raiding her cellar. \n");

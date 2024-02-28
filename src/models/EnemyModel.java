@@ -1,9 +1,6 @@
 package models;
 
-import java.util.Random;
-
 public abstract class EnemyModel {
-    private static Random random = new Random();
     private static MonsterRaces monsterRaces;
     private static int hp, Constitution, strength, speed, Dexterity, enemyAC, lvl;
     private static boolean isAlive;
@@ -16,16 +13,15 @@ public abstract class EnemyModel {
         this.monsterRaces = monsterRaces;
     }
 
-    public static int getHp() {
+    public int getHp() {
         return hp;
     }
 
     public void setHp(int hp) {
         if (hp <= 0){
             setAlive(false);
-        } else if (hp > 100) {
-            this.hp = hp;
         }else{
+            this.hp = hp;
             setAlive(true);
         }
     }
@@ -78,13 +74,15 @@ public abstract class EnemyModel {
         this.lvl = lvl;
     }
 
-    public static boolean isAlive() {
+    public boolean isAlive() {
         return isAlive;
     }
 
     public static void setAlive(boolean alive) {
         isAlive = alive;
     }
+
+    public abstract int enemyDied();
 
     public static int calculateConModifier(){
         return (getConstitution() - 10) / 2;
@@ -98,7 +96,7 @@ public abstract class EnemyModel {
         return (getDexterity() - 10) / 2;
     }
 
-    public abstract String attackType(int roll);
+    public abstract int attack(int armourClassCheckRoll);
 
     @Override
     public String toString(){

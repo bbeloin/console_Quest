@@ -26,18 +26,15 @@ public class Kobold extends EnemyModel{
         setEnemyAC(12);
         setAlive(true);
     }
+
+    @Override
     public int enemyDied(){
         int xpDropped = 5 + player.getLvl();
 
-        if (isAlive()){
-            attack(Die.d20(1));
-        }else {
-            return xpDropped;
-        }
-
-        return -1;
+        return xpDropped;
     }
 
+    @Override
     public int attack(int armourClassCheckRoll){
         int totalDamage = 0;
 
@@ -49,19 +46,6 @@ public class Kobold extends EnemyModel{
         }
 
         return totalDamage;
-    }
-
-    @Override
-    public String attackType(int roll){
-        String chance = "miss";
-
-        if (roll == 20){
-            return "Critical Hit";
-        } else if (roll >= getEnemyAC()) {
-            return "hit";
-        }else {
-            return chance;
-        }
     }
 
     @Override

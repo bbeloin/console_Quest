@@ -6,7 +6,8 @@ public abstract class PlayerModel {
     private Random random = new Random();
     private String name;
     private PlayerRaces playerRace;
-    private int hp, Constitution, strength, speed, Dexterity, playerAC, lvl, xp;
+    private int hp, strength, speed, Dexterity, playerAC, lvl, xp;
+    private static int Constitution;
     private int neededXP = 10;
     private boolean isAlive;
 
@@ -56,15 +57,13 @@ public abstract class PlayerModel {
     public void setHp(int hp) {
         if (hp <= 0){
             setAlive(false);
-        } else if (hp > 100) {
-            this.hp = hp;
-        }else{
+        } else{
             this.hp = hp;
             setAlive(true);
         }
     }
 
-    public int getConstitution() {
+    public static int getConstitution() {
         return Constitution;
     }
 
@@ -143,7 +142,7 @@ public abstract class PlayerModel {
         isAlive = alive;
     }
 
-    public int calculateConModifier(){
+    public static int calculateConModifier(){
         return (getConstitution() - 10) / 2;
     }
 
@@ -153,15 +152,6 @@ public abstract class PlayerModel {
 
     public int calculateDexModifier(){
         return (getDexterity() - 10) / 2;
-    }
-
-    public int roll(int numDice, int diceSides) {
-        int totalRoll = 0;
-
-        for (int i = 0; i < numDice; i++) {
-            totalRoll += random.nextInt(diceSides) + 1;
-        }
-        return totalRoll;
     }
 
     public abstract int attack(int attackRoll);
