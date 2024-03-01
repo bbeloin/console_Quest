@@ -52,6 +52,10 @@ public class FinalQuestUI {
         Console.writeLn(enemy.toString());
     }
 
+    public void skipRunOut(){
+        Console.writeLn("\nYou ran out of skips\n", Console.TextColor.RED);
+    }
+
     public String getCharacterName(){
         return Console.getStringInput("Sire what's tho name? ");
     }

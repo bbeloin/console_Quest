@@ -8,8 +8,8 @@ public class Player extends PlayerModel{
         instanceCount++;
     }
 
-    public Player(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int AC) {
-        super(name, playerRace, hp, constitution, strength, dexterity, AC);
+    public Player(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int speed, int AC) {
+        super(name, playerRace, hp, constitution, strength, dexterity, speed, AC);
         instanceCount++;
     }
 
@@ -18,10 +18,10 @@ public class Player extends PlayerModel{
     }
 
     @Override
-    public int attack(int attackRoll){
+    public int attack(int attackRoll, EnemyModel enemy){
         int totalDamage = 0;
 
-        if (attackRoll >= EnemyModel.getEnemyAC()){
+        if ((attackRoll + calculateStrModifier()) >= enemy.getEnemyAC()){
             totalDamage = Die.d6(3);
             if (attackRoll == 20){
                 totalDamage *= 2;

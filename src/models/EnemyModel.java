@@ -5,7 +5,7 @@ public abstract class EnemyModel {
     private static int hp, Constitution, strength, speed, Dexterity, enemyAC, lvl;
     private static boolean isAlive;
 
-    public static MonsterRaces getMonsterRaces() {
+    public MonsterRaces getMonsterRaces() {
         return monsterRaces;
     }
 
@@ -19,6 +19,7 @@ public abstract class EnemyModel {
 
     public void setHp(int hp) {
         if (hp <= 0){
+            this.hp = hp;
             setAlive(false);
         }else{
             this.hp = hp;
@@ -36,6 +37,10 @@ public abstract class EnemyModel {
 
     public static int getStrength() {
         return strength;
+    }
+
+    public static int calculateStrModifier(){
+        return (getStrength() - 10) / 2;
     }
 
     public void setStrength(int strength) {
@@ -56,6 +61,10 @@ public abstract class EnemyModel {
 
     public void setDexterity(int dexterity) {
         Dexterity = dexterity;
+    }
+
+    public static int calculateDexModifier(){
+        return (getDexterity() - 10) / 2;
     }
 
     public static int getEnemyAC() {
@@ -82,21 +91,11 @@ public abstract class EnemyModel {
         isAlive = alive;
     }
 
-    public abstract int enemyDied();
+    public abstract int enemyDied(Player player);
 
-    public static int calculateConModifier(){
-        return (getConstitution() - 10) / 2;
-    }
+    public abstract int attack(int armourClassCheckRoll, Player player);
 
-    public static int calculateStrModifier(){
-        return (getStrength() - 10) / 2;
-    }
-
-    public static int calculateDexModifier(){
-        return (getDexterity() - 10) / 2;
-    }
-
-    public abstract int attack(int armourClassCheckRoll);
+    public abstract String attackType(int roll);
 
     @Override
     public String toString(){
@@ -104,9 +103,6 @@ public abstract class EnemyModel {
                 .append("Race: ").append(getMonsterRaces())
                 .append(", HP: ").append(getHp())
                 .append(", Lvl: ").append(getLvl())
-                .append(", Con: ").append(getConstitution())
-                .append(", Strength: ").append(getStrength())
-                .append(", Dex: ").append(getDexterity())
                 .append(", AC: ").append(getEnemyAC()).toString();
     }
 }

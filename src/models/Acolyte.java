@@ -13,6 +13,11 @@ public class Acolyte extends EnemyModel{
         setMonsterRaces(MonsterRaces.ACOLYTE);
         setLvl(1);
         setHp(Die.d8(2));
+
+        if (getHp() <= 0){
+            setHp(Die.d8(2));
+        }
+
         setConstitution(10);
         setStrength(10);
         setDexterity(10);
@@ -20,14 +25,14 @@ public class Acolyte extends EnemyModel{
     }
 
     @Override
-    public int enemyDied(){
+    public int enemyDied(Player player){
         int xpDropped = 7 + player.getLvl();
 
         return xpDropped;
     }
 
     @Override
-    public int attack(int armourClassCheckRoll){
+    public int attack(int armourClassCheckRoll, Player player){
         int totalDamage = 0;
 
         if ((armourClassCheckRoll + 2 + calculateStrModifier()) >= player.getPlayerAC()){
@@ -38,6 +43,19 @@ public class Acolyte extends EnemyModel{
         }
 
         return totalDamage;
+    }
+
+    @Override
+    public String attackType(int roll){
+        String chance = "miss";
+
+        if (roll == 20){
+            return "Critical Hit";
+        } else if (roll >= getEnemyAC()) {
+            return "hit";
+        }else {
+            return chance;
+        }
     }
 
     @Override

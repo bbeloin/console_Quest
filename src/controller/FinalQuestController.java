@@ -6,16 +6,16 @@ import views.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-import models.Quest.*;
-
 import static models.Quest.*;
 
 public class FinalQuestController {
     private int currentPlayer = 0;
+    private int skipCount = 0;
     private static ArrayList<EnemyModel> enemy = new ArrayList<>();
     private static FinalQuestUI ui = new FinalQuestUI();
     private static Random random = new Random();
     private Player tempPlayer = new Player();
+    private Quest quest = new Quest();
     public Player player;
 
     public void run(){
@@ -24,13 +24,18 @@ public class FinalQuestController {
 
         if (tempPlayer.getInstanceCount() == 1){
             this.player = createCharacter();
-            StringBuilder a = getQuest();
-            System.out.println(a);
+            System.out.println(this.quest.getQuest());
             addEnemies();
             Player.instanceCount++;
         }
 
         while (usingProgram) {
+
+            if (enemy.isEmpty()){
+                Quest quest1 = new Quest();
+                System.out.println(quest1.getQuest());
+                addEnemies();
+            }
 
             int menuItem = ui.displayMainMenu();
 
@@ -39,7 +44,12 @@ public class FinalQuestController {
                         acceptQuest();
                         break;
                     case 2:
-                        denyQuest();
+                        if (this.skipCount == 0){
+                            this.skipCount++;
+                            denyQuest();
+                        }else {
+                            ui.skipRunOut();
+                        }
                         break;
             }
 
@@ -49,11 +59,15 @@ public class FinalQuestController {
 
     private void acceptQuest() {
 
-        String question = "What do you do? ";
+        String question = "do you? ";
         String q1Attack = " Attack: ";
         String q2RunAway = " Run Away: ";
 
         ui.displayFighters(this.player, enemy.getFirst());
+
+        if (currentPlayer == 0){
+            System.out.printf("\n%s's Turn\n\n", this.player.getName());
+        }
 
         int choice = ui.getActionChoice(question, q1Attack, q2RunAway);
 
@@ -66,7 +80,12 @@ public class FinalQuestController {
                 attack();
                 break;
             case 2:
-                runAway();
+                if (this.skipCount == 0){
+                    this.skipCount++;
+                    runAway();
+                }else {
+                    ui.skipRunOut();
+                }
                 break;
         }
     }
@@ -78,27 +97,39 @@ public class FinalQuestController {
         System.out.println("What is your race: ");
         getPlayerRace();
 
-        String sRace = ui.getRace();
-        PlayerRaces races = getEnumIgnoreCase(sRace);
+        String sRace;
+        PlayerRaces races;
+
+        do {
+            sRace = ui.getRace();
+            races = getEnumIgnoreCase(sRace);
+        }while (races == null);
 
         int hp = (random.nextInt(10) + 8) + Player.calculateConModifier();
         int con = random.nextInt(10) + 8;
         int str = random.nextInt(10) + 8;
         int dex = random.nextInt(10) + 8;
+        int speed = Player.setSpeed(35);
         int ac = random.nextInt(10) + 8;
 
-        Player player = new Player(name, races, hp, con, str, dex, ac);
+        Player player = new Player(name, races, hp, con, str, dex, speed, ac);
 
         return player;
     }
 
     public static PlayerRaces getEnumIgnoreCase(String value) {
-        for (PlayerRaces races : PlayerRaces.values()) {
-            System.out.println(races);
-            if (races.name().equalsIgnoreCase(value)) {
-                return races;
+        try {
+            for (PlayerRaces races : PlayerRaces.values()) {
+                if (races.name().equalsIgnoreCase(value)) {
+                    return races;
+                }
             }
+            throw new IllegalArgumentException("Enter a valid race");
+        }catch (IllegalArgumentException e){
+            String message = e.getMessage();
+            System.out.println("IllegalArgumentException message: " + message);
         }
+
         return null;
     }
 
@@ -109,27 +140,52 @@ public class FinalQuestController {
     }
 
     private void denyQuest() {
-        System.out.println(getQuest());
+        if ( !enemy.isEmpty()){
+            for (EnemyModel i : enemy){
+                enemy.remove(i);
+                break;
+            }
+        }
+
         run();
     }
 
     private void attack(){
+
         for (EnemyModel i : enemy){
             if (playerTurn()){
-                enemy.getFirst().setHp(i.getHp() - this.player.attack(Die.d20(1)));
-                detectTurn();
+                int playerDieRoll = Die.d20(1);
+                i.setHp(i.getHp() - this.player.attack(playerDieRoll, i));
+                System.out.printf("\nYour roll was a: %s \n", playerDieRoll);
+                System.out.printf("Which was a: %s \n", player.attackType(playerDieRoll));
             }else {
-                this.player.setHp(this.player.getHp() - i.attack(Die.d20(1)));
-                detectTurn();
+                int enemyDieRoll = Die.d20(1);
+                this.player.setHp(this.player.getHp() - i.attack(enemyDieRoll, player));
+                System.out.printf("\nThe Enemies roll was a: %s \n", enemyDieRoll);
+                System.out.printf("Which was a: %s \n\n", i.attackType(enemyDieRoll));
+            }
+
+            if (player.getHp() > 0 && currentPlayer == 0){
+                acceptQuest();
+            }else if (i.getHp() > 0 && currentPlayer == 1){
+                attack();
+            }
+            else {
+                checkForWin();
+                run();
             }
         }
     }
 
     private void runAway(){
         for (EnemyModel i : enemy){
-            if (playerTurn() && player.getSpeed() > i.getSpeed()){
-                i.setAlive(false);
-                System.out.printf("You ran away from %s", i.getMonsterRaces());
+            if (currentPlayer == 0 && player.getSpeed() > i.getSpeed()){
+                i.setHp(0);
+                enemy.remove(i);
+                System.out.printf("You ran away from %s\n", i.getMonsterRaces());
+//                System.out.println(getQuest());
+                addEnemies();
+                run();
             }
 
         }
@@ -158,10 +214,12 @@ public class FinalQuestController {
     private boolean detectTurn(){
         boolean isPlayerTurn = true;
 
-        if (currentPlayer == 0 && isPlayerTurn) {
+        if (currentPlayer == 0) {
             currentPlayer++;
+            isPlayerTurn = true;
         } else if (currentPlayer == 1) {
             currentPlayer = 0;
+            isPlayerTurn = false;
         }
 
         return isPlayerTurn;
@@ -170,32 +228,25 @@ public class FinalQuestController {
 
     private boolean playerTurn() {
 
-        if (this.player.isAlive()) {
+        if (this.player.isAlive() && detectTurn()) {
             return true;
         }
-        detectTurn();
         return false;
     }
 
-    private boolean enemyTurn() {
+    private void checkForWin() {
 
-        if (detectTurn()) {
-            return true;
+        for (EnemyModel i : enemy) {
+            if (player.isAlive() && (!i.isAlive())) {
+                System.out.printf("You slew the %s \n", i.getMonsterRaces());
+                player.setNeededXP(i.enemyDied(player));
+                enemy.remove(i);
+                break;
+//                System.out.println(getQuest());
+            } else {
+                System.out.println("YOU DIED");
+                System.exit(0);
+            }
         }
-
-        return false;
-    }
-
-    private String checkForWin(Player player) {
-        String message = null;
-
-        if (player.isAlive() && (!enemy.getFirst().isAlive())) {
-            System.out.println("You slew the beast");
-            player.setNeededXP(enemy.getFirst().enemyDied());
-            System.out.println(getQuest());
-        } else {
-            System.out.println("YOU DIED");;
-        }
-        return message;
     }
 }

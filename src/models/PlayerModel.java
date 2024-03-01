@@ -1,14 +1,10 @@
 package models;
 
-import java.util.Random;
-
 public abstract class PlayerModel {
-    private Random random = new Random();
     private String name;
     private PlayerRaces playerRace;
-    private int hp, strength, speed, Dexterity, playerAC, lvl, xp;
-    private static int Constitution;
-    private int neededXP = 10;
+    private int hp, strength, playerAC, lvl, xp, neededXP = 10;
+    private static int Constitution, speed, Dexterity;
     private boolean isAlive;
 
     public PlayerModel() {
@@ -23,7 +19,7 @@ public abstract class PlayerModel {
         setAlive(true);
     }
 
-    public PlayerModel(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int playerAC) {
+    public PlayerModel(String name, PlayerRaces playerRace, int hp, int constitution, int strength, int dexterity, int speed, int playerAC) {
         setName(name);
         setPlayerRace(playerRace);
         setLvl(1);
@@ -31,6 +27,7 @@ public abstract class PlayerModel {
         setConstitution(constitution);
         setStrength(strength);
         setDexterity(dexterity);
+        setSpeed(speed);
         setPlayerAC(playerAC);
     }
 
@@ -56,6 +53,7 @@ public abstract class PlayerModel {
 
     public void setHp(int hp) {
         if (hp <= 0){
+            this.hp = hp;
             setAlive(false);
         } else{
             this.hp = hp;
@@ -71,6 +69,10 @@ public abstract class PlayerModel {
         this.Constitution = constitution;
     }
 
+    public static int calculateConModifier(){
+        return (getConstitution() - 10) / 2;
+    }
+
     public int getStrength() {
         return strength;
     }
@@ -79,16 +81,25 @@ public abstract class PlayerModel {
         this.strength = strength;
     }
 
+    public int calculateStrModifier(){
+        return (getStrength() - 10) / 2;
+    }
+
     public int getSpeed() {
         return speed;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed + calculateDexModifier();
+    public static int setSpeed(int passedInSpeed) {
+        speed = passedInSpeed + calculateDexModifier();
+        return speed;
     }
 
-    public int getDexterity() {
+    public static int getDexterity() {
         return Dexterity;
+    }
+
+    public static int calculateDexModifier(){
+        return (getDexterity() - 10) / 2;
     }
 
     public void setDexterity(int dexterity) {
@@ -119,7 +130,6 @@ public abstract class PlayerModel {
         this.neededXP = neededXP;
     }
 
-
     public int getLvl() {
         return lvl;
     }
@@ -142,21 +152,9 @@ public abstract class PlayerModel {
         isAlive = alive;
     }
 
-    public static int calculateConModifier(){
-        return (getConstitution() - 10) / 2;
-    }
+    public abstract int attack(int attackRoll, EnemyModel enemy);
 
-    public int calculateStrModifier(){
-        return (getStrength() - 10) / 2;
-    }
-
-    public int calculateDexModifier(){
-        return (getDexterity() - 10) / 2;
-    }
-
-    public abstract int attack(int attackRoll);
-
-    public abstract String attackType(int roll);
+    public abstract String attackType(int attackRoll);
 
     @Override
     public String toString() {
@@ -165,9 +163,6 @@ public abstract class PlayerModel {
                 .append(", Race: ").append(getPlayerRace())
                 .append(", Lvl: ").append(getLvl())
                 .append(", HP: ").append(getHp())
-                .append(", Con: ").append(getConstitution())
-                .append(", Strength: ").append(getStrength())
-                .append(", Dex: ").append(getDexterity())
                 .append(", AC: ").append(getPlayerAC()).toString();
     }
 

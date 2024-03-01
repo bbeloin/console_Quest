@@ -1,16 +1,16 @@
 package models;
 
 public enum PlayerRaces {
-    HUMAN("human"),
-    ELF("elf"),
-    HALF_ELF("half-Elf"),
-    HALF_ORC("half-Orc"),
-    HALFLING("halfling"),
-    DWARF("dwarf"),
-    GNOME("gnome"),
-    TIEFLING("tiefling"),
-    GITHYANKI("githyanki"),
-    DRAGONBORN("dragonborn");
+    HUMAN("Human"),
+    ELF("Elf"),
+    HALF_ELF("Half_Elf"),
+    HALF_ORC("Half_Orc"),
+    HALFLING("Halfling"),
+    DWARF("Dwarf"),
+    GNOME("Gnome"),
+    TIEFLING("Tiefling"),
+    GITHYANKI("Githyanki"),
+    DRAGONBORN("Dragonborn");
 
     private final String friendlyName;
 
